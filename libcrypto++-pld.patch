@@ -1,0 +1,12 @@
+--- libcrypto++-5.5.2/Makefile.am~	2009-03-04 14:31:45.674649007 +0100
++++ libcrypto++-5.5.2/Makefile.am	2009-03-04 14:34:34.954216989 +0100
+@@ -39,7 +39,7 @@
+ cryptestcwd_LDADD = libcrypto++.la
+ 
+ lib_LTLIBRARIES = libcrypto++.la
+-libcrypto___la_LDFLAGS = -version-info 7:0:0
++libcrypto___la_LDFLAGS = -version-info 7:0:0 -pthread
+ libcrypto___la_SOURCES = \
+ 	3way.cpp \
+ 	adler32.cpp \
+
