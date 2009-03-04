@@ -9,6 +9,7 @@ Source0:	http://www.cryptopp.com/cryptopp552.zip
 Patch0:		%{name}-debian.patch
 Patch1:		%{name}-pld.patch
 BuildRequires:	dos2unix
+BuildRequires:	libstdc++-devel
 BuildRequires:	unzip
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
