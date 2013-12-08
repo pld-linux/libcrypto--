@@ -1,13 +1,18 @@
 Summary:	C++ class library of cryptographic schemes
 Name:		libcrypto++
-Version:	5.5.2
+Version:	5.6.2
 Release:	1
 License:	Public Domain
 Group:		Libraries
-Source0:	http://www.cryptopp.com/cryptopp552.zip
-# Source0-md5:	a889be9d9ad5c202c925fb105caa4857
-Patch0:		%{name}-debian.patch
-Patch1:		%{name}-pld.patch
+Source0:	http://www.cryptopp.com/cryptopp562.zip
+# Source0-md5:	7ed022585698df48e65ce9218f6c6a67
+Patch0:		strict-gcc43-include.diff
+Patch1:		doxygen-setup.diff
+Patch2:		doxygen-main-link.diff
+Patch3:		cryptest-data-files-location.diff
+Patch4:		debian-config.diff
+Patch8:		ac.patch
+Patch9:		%{name}-pld.patch
 BuildRequires:	dos2unix
 BuildRequires:	libstdc++-devel
 BuildRequires:	unzip
@@ -74,14 +79,12 @@ Statyczna wersja biblioteki libcrypto++.
 rm GNUmakefile
 dos2unix -q *.h *.cpp Doxyfile
 %patch0 -p1
-
-for a in debian/patches/*.dpatch; do
-	cat $a | patch -p1 || exit 1
-done
-
-cp -a debian/{Makefile.am,config.h.in,configure.ac,libcrypto++.pc.in} .
-
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch8 -p0
+%patch9 -p1
 
 %build
 %{__libtoolize}
@@ -96,9 +99,12 @@ cp -a debian/{Makefile.am,config.h.in,configure.ac,libcrypto++.pc.in} .
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT%{_datadir}/crypto++
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+cp -a TestData TestVectors $RPM_BUILD_ROOT%{_datadir}/crypto++
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -111,7 +117,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc *.txt
 %attr(755,root,root) %{_bindir}/crypt*
 %attr(755,root,root) %{_libdir}/libcrypto++.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libcrypto++.so.7
+%attr(755,root,root) %ghost %{_libdir}/libcrypto++.so.9
 %{_datadir}/crypto*
 
 %files devel
