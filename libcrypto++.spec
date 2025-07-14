@@ -78,13 +78,13 @@ Statyczna wersja biblioteki libcrypto++.
 %setup -q -c
 rm GNUmakefile
 dos2unix -q *.h *.cpp Doxyfile
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch8 -p0
-%patch9 -p1
+%patch -P0 -p1
+%patch -P1 -p1
+%patch -P2 -p1
+%patch -P3 -p1
+%patch -P4 -p1
+%patch -P8 -p0
+%patch -P9 -p1
 
 %build
 %{__libtoolize}
